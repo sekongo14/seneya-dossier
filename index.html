@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dossier Seneya</title>
+<meta name="description" content="Seneya : gestion de ferme fiable, marché direct éleveurs ↔ restaurants, logistique et communauté, pour la Côte d'Ivoire et l'Afrique de l'Ouest.">
+<link rel="icon" href="assets/favicon.png">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;450;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Roboto+Mono:wght@700&display=swap');
+
+  :root{
+    --slate-900:#0F172A;--slate-700:#334155;--slate-600:#475569;--slate-500:#64748B;--slate-400:#94A3B8;--slate-200:#E2E8F0;--slate-100:#F1F5F9;
+    --vi-700:#3A1870;--vi-600:#5B2A9E;--vi-500:#6E3BC2;--vi-400:#A88BE0;--vi-300:#D6C8EE;--vi-50:#F7F3FD;
+    --night:#1B0B33;
+    --gold-700:#8A6200;--gold-500:#F5B400;--gold-400:#FFC93C;--gold-300:#FFDB7A;--gold-50:#FFF8E1;
+    --green:#2BA84A;--green-dark:#1E7A3C;
+
+    --bg:#FAF9FC;--surface:#FFFFFF;--surface-2:var(--vi-50);
+    --text:var(--slate-900);--text-2:var(--slate-600);--text-3:var(--slate-400);
+    --border:var(--slate-200);
+    --accent:var(--vi-600);--accent-deep:var(--vi-700);--accent-tint:var(--vi-50);--warm:var(--gold-700);--warm-tint:var(--gold-50);
+    --cover-bg:var(--night);--cover-ink:#F3EEFB;--cover-ink-2:#B9A8D9;
+
+    --font-d:'Manrope',system-ui,sans-serif;--font:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;
+    --measure:700px;
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#120A22;--surface:#1A1030;--surface-2:#22163C;
+      --text:#F1ECFA;--text-2:#C2B6DA;--text-3:#8A7EA6;
+      --border:#33284D;
+      --accent:var(--vi-300);--accent-deep:#E6DDF7;--accent-tint:#22163C;--warm:var(--gold-300);--warm-tint:#2A2212;
+      --cover-bg:#0D0619;--cover-ink:#F3EEFB;--cover-ink-2:#A898C8;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#120A22;--surface:#1A1030;--surface-2:#22163C;
+    --text:#F1ECFA;--text-2:#C2B6DA;--text-3:#8A7EA6;
+    --border:#33284D;
+    --accent:var(--vi-300);--accent-deep:#E6DDF7;--accent-tint:#22163C;--warm:var(--gold-300);--warm-tint:#2A2212;
+    --cover-bg:#0D0619;--cover-ink:#F3EEFB;--cover-ink-2:#A898C8;
+  }
+
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+  h1,h2,h3,h4{font-family:var(--font-d);color:var(--text);text-wrap:balance;letter-spacing:-.01em;margin:0}
+  a{color:var(--accent)}
+  .mono{font-family:var(--mono)}
+  .tnum{font-variant-numeric:tabular-nums}
+  img{max-width:100%}
+  ::selection{background:var(--accent);color:#fff}
+
+  /* ---------- Cover ---------- */
+  .cover{background:var(--cover-bg);color:var(--cover-ink);padding:min(14vw,120px) 24px min(10vw,88px);position:relative;overflow:hidden}
+  .cover::before{content:"";position:absolute;inset:0;
+    background:
+      radial-gradient(60% 55% at 82% 8%, rgba(110,59,194,.38) 0%, transparent 60%),
+      radial-gradient(50% 45% at 6% 96%, rgba(245,180,0,.16) 0%, transparent 60%);
+    pointer-events:none}
+  .cover-inner{max-width:var(--measure);margin:0 auto;position:relative}
+  .cover-eyebrow{font-family:var(--mono);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--cover-ink-2);display:flex;align-items:center;gap:10px}
+  .cover-eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--gold-500)}
+  /* Logo Seneya : « seneya » en Roboto Mono, le y vert devient une pousse */
+  .logo{font-family:"Roboto Mono",ui-monospace,monospace;font-weight:700;letter-spacing:.04em;display:inline-flex;align-items:baseline;line-height:1;padding-top:.3em}
+  .logo-y{position:relative;color:var(--green)}
+  .logo-leaves{position:absolute;left:-.06em;bottom:.55em;width:.72em;height:.5em;overflow:visible}
+  .cover-word{font-size:clamp(48px,11vw,96px);margin-top:18px;color:#fff}
+  .cover-sub{margin-top:20px;font-size:clamp(16px,2.4vw,20px);color:var(--cover-ink-2);max-width:540px;font-weight:450}
+  .cover-meta{margin-top:56px;display:flex;flex-wrap:wrap;gap:32px;font-family:var(--mono);font-size:12.5px;color:var(--cover-ink-2)}
+  .cover-meta b{display:block;color:var(--cover-ink);font-family:var(--font);font-weight:600;font-size:13.5px;margin-top:3px}
+  .cover-tags{margin-top:40px;display:flex;flex-wrap:wrap;gap:8px}
+  .cover-tags span{font-family:var(--mono);font-size:11.5px;padding:5px 11px;border:1px solid rgba(243,238,251,.22);border-radius:99px;color:var(--cover-ink-2)}
+
+  /* ---------- Shell ---------- */
+  .wrap{max-width:var(--measure);margin:0 auto;padding:0 24px}
+  .lede{padding:56px 0 8px}
+  .lede p{font-size:19px;color:var(--text-2);font-weight:450;max-width:60ch}
+
+  /* ---------- TOC ---------- */
+  .toc{margin:44px 0 8px;padding:26px 28px;border:1px solid var(--border);border-radius:14px;background:var(--surface)}
+  .toc-title{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3);margin-bottom:14px}
+  .toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 28px}
+  @media (max-width:560px){.toc-grid{grid-template-columns:1fr}}
+  .toc-grid a{display:flex;gap:10px;align-items:baseline;padding:7px 0;color:var(--text);text-decoration:none;font-size:14.5px;border-bottom:1px dashed var(--border)}
+  .toc-grid a:hover{color:var(--accent)}
+  .toc-grid a .n{font-family:var(--mono);color:var(--accent);font-size:12.5px;flex:none;width:20px}
+
+  /* ---------- Chapters ---------- */
+  .chapter{padding:78px 0 8px}
+  .chapter-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px}
+  .chapter-n{font-family:var(--mono);font-size:13px;color:var(--accent);letter-spacing:.06em}
+  .chapter-head::after{content:"";flex:1;height:1px;background:var(--border)}
+  h2{font-size:clamp(26px,4vw,34px);font-weight:800;margin-top:6px}
+  h3{font-size:20px;font-weight:700;margin-top:40px;color:var(--accent-deep)}
+  .kicker{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-top:6px}
+
+  p{margin:16px 0;color:var(--text-2);max-width:66ch}
+  p b, li b{color:var(--text);font-weight:650}
+  ul,ol{margin:16px 0;padding-left:22px;color:var(--text-2)}
+  li{margin:8px 0;max-width:64ch}
+  li::marker{color:var(--accent)}
+
+  .lead-q{font-family:var(--font-d);font-weight:700;font-size:clamp(21px,3vw,27px);color:var(--accent-deep);border-left:3px solid var(--gold-500);padding-left:22px;margin:34px 0;max-width:56ch;line-height:1.4}
+
+  /* ---------- Callouts ---------- */
+  .box{border:1px solid var(--border);background:var(--surface);border-radius:12px;padding:22px 24px;margin:26px 0}
+  .box.tint{background:var(--accent-tint);border-color:transparent}
+  .box.warm{background:var(--warm-tint);border-color:transparent}
+  .box-h{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:8px;margin-bottom:10px}
+  .box.warm .box-h{color:var(--warm)}
+  .box p{margin:6px 0;font-size:14.5px}
+
+  /* ---------- Key figures ---------- */
+  .figures{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:26px 0}
+  @media (max-width:560px){.figures{grid-template-columns:repeat(2,1fr)}}
+  .figure{border:1px solid var(--border);border-radius:12px;padding:16px;background:var(--surface)}
+  .figure b{display:block;font-family:var(--font-d);font-weight:800;font-size:28px;color:var(--accent);line-height:1.1}
+  .figure span{display:block;font-size:12.5px;color:var(--text-3);margin-top:6px;line-height:1.4}
+
+  /* ---------- Tables ---------- */
+  .twrap{overflow-x:auto;margin:22px 0;border:1px solid var(--border);border-radius:12px}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px}
+  th,td{text-align:left;padding:12px 16px;border-bottom:1px solid var(--border);vertical-align:top}
+  th{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);background:var(--surface-2)}
+  tr:last-child td{border-bottom:none}
+  td{color:var(--text-2)}
+  td b{color:var(--text)}
+
+  /* ---------- Module grid ---------- */
+  .mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin:22px 0}
+  .mcard{border:1px solid var(--border);border-radius:12px;padding:16px;background:var(--surface)}
+  .mcard.soon{background:transparent;border-style:dashed}
+  .mcard .sw{width:26px;height:26px;border-radius:8px;margin-bottom:10px}
+  .mcard.soon .sw{opacity:.4}
+  .mcard .nm{font-family:var(--font-d);font-weight:700;font-size:14.5px;color:var(--text)}
+  .mcard .ds{font-size:12.5px;color:var(--text-3);margin-top:5px;line-height:1.5}
+  .pill{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;border-radius:99px;padding:2px 8px;margin-left:6px;vertical-align:middle}
+  .pill.ok{background:#E7F7EC;color:var(--green-dark)}
+  .pill.soon{background:var(--warm-tint);color:var(--warm)}
+
+  /* ---------- Roadmap ---------- */
+  .phases{display:flex;flex-direction:column;gap:0;margin:26px 0;border-left:2px solid var(--border);padding-left:0}
+  .phase{position:relative;padding:0 0 34px 30px;border-left:2px solid var(--border);margin-left:5px}
+  .phase:last-child{border-color:transparent;padding-bottom:2px}
+  .phase::before{content:"";position:absolute;left:-7px;top:2px;width:12px;height:12px;border-radius:50%;background:var(--surface);border:2px solid var(--accent)}
+  .phase.done::before{background:var(--gold-500);border-color:var(--gold-500)}
+  .phase-tag{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+  .phase h4{font-family:var(--font-d);font-weight:700;font-size:17px;margin-top:6px;color:var(--text)}
+  .phase p{margin-top:6px;font-size:14.5px}
+
+  /* ---------- Stack diagram ---------- */
+  .stack-diagram{display:flex;flex-direction:column;gap:0;margin:28px 0;align-items:center}
+  .sd-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;width:100%}
+  .sd-box{flex:1;min-width:150px;border:1px solid var(--border);background:var(--surface);border-radius:12px;padding:14px 16px;text-align:center}
+  .sd-box b{display:block;font-family:var(--font-d);font-size:14px;color:var(--text)}
+  .sd-box span{display:block;font-family:var(--mono);font-size:11px;color:var(--text-3);margin-top:4px}
+  .sd-arrow{font-family:var(--mono);color:var(--accent);font-size:15px;margin:6px 0}
+
+  /* ---------- Brand ---------- */
+  .swatches{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}
+  .swatch{display:flex;align-items:center;gap:10px;border:1px solid var(--border);border-radius:10px;padding:8px 12px 8px 8px;background:var(--surface);font-size:13px;color:var(--text-2)}
+  .swatch i{width:28px;height:28px;border-radius:7px;display:block}
+  .swatch b{display:block;color:var(--text);font-size:13px}
+  .brand-demo{border:1px solid var(--border);border-radius:12px;background:var(--surface);padding:22px 24px;margin:22px 0;display:flex;align-items:center;gap:28px;flex-wrap:wrap}
+  .brand-demo .logo{font-size:44px;color:var(--night)}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .brand-demo .logo{color:#fff}}
+  :root[data-theme="dark"] .brand-demo .logo{color:#fff}
+  .brand-demo img{width:64px;height:64px}
+
+  /* ---------- Roles ---------- */
+  .roles{display:grid;grid-template-columns:1fr;gap:14px;margin:22px 0}
+  .role{border:1px solid var(--border);border-radius:12px;padding:20px 22px;background:var(--surface);display:flex;gap:18px}
+  @media (max-width:560px){.role{flex-direction:column;gap:10px}}
+  .role .tag{font-family:var(--mono);font-size:11px;color:#fff;background:var(--vi-600);border-radius:99px;padding:4px 10px;height:fit-content;white-space:nowrap;align-self:flex-start}
+  .role .tag.later{background:var(--slate-500)}
+  .role-body h4{font-family:var(--font-d);font-size:16px;font-weight:700;color:var(--text)}
+  .role-body p{margin:6px 0 0;font-size:14px}
+
+  /* ---------- Footer ---------- */
+  footer{margin-top:90px;padding:40px 0 60px;border-top:1px solid var(--border)}
+  footer p{font-family:var(--mono);font-size:12px;color:var(--text-3)}
+
+  @media print{ .cover{color-adjust:exact;-webkit-print-color-adjust:exact} }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-inner">
+    <div class="cover-eyebrow"><span class="dot"></span>Dossier de présentation</div>
+    <div class="cover-word"><span class="logo" aria-label="Seneya">sene<span class="logo-y">y<svg class="logo-leaves" viewBox="0 0 60 40" aria-hidden="true">
+      <path d="M10 40C-1 35-8 22-8 6c12 6 20 18 18 34Z" fill="#2BA84A"/><path d="M10 40C5 28-1 16-8 6" stroke="#1E7A3C" stroke-width="1.6" fill="none"/>
+      <path d="M50 40c11-5 18-18 18-34-12 6-20 18-18 34Z" fill="#3CC45E"/><path d="M50 40c5-12 11-24 18-34" stroke="#1E7A3C" stroke-width="1.6" fill="none"/>
+    </svg></span>a</span></div>
+    <p class="cover-sub">Gestion de ferme fiable, marché direct éleveurs&nbsp;↔&nbsp;restaurants, logistique et communauté — une seule application, pensée pour la Côte d'Ivoire et l'Afrique de l'Ouest.</p>
+    <div class="cover-meta">
+      <div>Édition<b>Octobre 2026</b></div>
+      <div>Statut<b>Phase 1 — ERP fonctionnel, pilotes à lancer</b></div>
+      <div>Produit<b>Seneya Ferme</b></div>
+      <div>Marché<b>Côte d'Ivoire &amp; sous-région</b></div>
+    </div>
+    <div class="cover-tags">
+      <span>Agritech</span><span>ERP élevage &amp; agriculture</span><span>Marketplace B2B</span><span>Logistique</span><span>Coopératives</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="lede">
+    <p>Ce document présente le projet Seneya dans son ensemble&nbsp;: le problème adressé, la solution en quatre piliers, le produit tel qu'il existe aujourd'hui, le modèle économique, la feuille de route, la stack technique et les profils recherchés pour l'équipe. Il s'adresse à toute personne qui évalue l'opportunité de rejoindre ou de soutenir le projet.</p>
+  </div>
+
+  <nav class="toc">
+    <div class="toc-title">Sommaire</div>
+    <div class="toc-grid">
+      <a href="#resume"><span class="n">01</span> Résumé exécutif</a>
+      <a href="#vision"><span class="n">02</span> Vision &amp; mission</a>
+      <a href="#probleme"><span class="n">03</span> Le problème</a>
+      <a href="#marche"><span class="n">04</span> Marché &amp; utilisateurs cibles</a>
+      <a href="#solution"><span class="n">05</span> La solution — quatre piliers</a>
+      <a href="#produit"><span class="n">06</span> Le produit aujourd'hui</a>
+      <a href="#modele"><span class="n">07</span> Modèle économique</a>
+      <a href="#roadmap"><span class="n">08</span> Stratégie d'exécution</a>
+      <a href="#stack"><span class="n">09</span> Stack technique</a>
+      <a href="#concurrence"><span class="n">10</span> Paysage concurrentiel</a>
+      <a href="#risques"><span class="n">11</span> Risques &amp; mitigations</a>
+      <a href="#hypotheses"><span class="n">12</span> Hypothèses à valider</a>
+      <a href="#financier"><span class="n">13</span> Projections financières</a>
+      <a href="#equipe"><span class="n">14</span> L'équipe recherchée</a>
+      <a href="#glossaire"><span class="n">15</span> Glossaire</a>
+      <a href="#annexe"><span class="n">16</span> Annexe — état du produit</a>
+    </div>
+  </nav>
+
+  <!-- 01 -->
+  <section class="chapter" id="resume">
+    <div class="chapter-head"><span class="chapter-n">01 / 16</span></div>
+    <div class="kicker">Vue d'ensemble</div>
+    <h2>Résumé exécutif</h2>
+    <p>Seneya part d'un constat simple&nbsp;: les éleveurs et agriculteurs d'Afrique de l'Ouest gèrent des exploitations à forte valeur — lapins, volailles, poissons, bovins, caprins… — sans outil de suivi fiable. Le registre, quand il existe, tient sur un cahier ou dans la mémoire de l'exploitant. Résultat&nbsp;: des décisions à l'aveugle, aucune traçabilité, et aucune preuve de qualité à présenter à un acheteur exigeant.</p>
+    <p>Ce déficit de fiabilité a un effet en cascade&nbsp;: sans données de traçabilité, un éleveur ne peut pas démontrer la qualité de sa production à un restaurant, reste dépendant d'intermédiaires informels, et n'a aucune solution simple pour vendre au-delà de sa zone géographique immédiate.</p>
+    <p>Seneya s'attaque à ce problème par séquence plutôt que d'un bloc. La <b>Phase&nbsp;1</b> construit l'ERP de la ferme — <b>Seneya Ferme</b> — module par filière, avec une interface pensée pour des utilisateurs à aisance numérique variable. C'est la fondation&nbsp;: elle crée l'habitude d'usage et la base de données de confiance (santé, croissance, historique) qui deviendra l'atout différenciant des trois piliers suivants — un <b>Marché</b> direct éleveurs↔restaurants, une <b>Logistique</b> inter-villes sous-traitée, et une couche <b>Communauté &amp; Coopératives</b>.</p>
+    <p>Le prototype statique du départ a été <b>entièrement porté sur une stack de production</b> (Django&nbsp;+&nbsp;PostgreSQL). L'application gère aujourd'hui plusieurs fermes, chacune sur sa propre adresse, avec trois filières complètes (Lapins, Volailles, Pisciculture), un couvoir, et les modules transverses Stocks, Ventes, Finances, Contacts, Activités, Tableau de bord et Équipe. Elle est couverte par plus de 800 tests automatisés. La prochaine étape n'est plus technique&nbsp;: <b>mettre l'application en ligne et la confier à des fermes pilotes</b>.</p>
+    <div class="figures">
+      <div class="figure"><b>3</b><span>filières complètes&nbsp;: lapins, volailles, pisciculture</span></div>
+      <div class="figure"><b>9</b><span>modules disponibles dans l'App Store</span></div>
+      <div class="figure"><b>832</b><span>tests automatisés</span></div>
+      <div class="figure"><b>1</b><span>application web + mobile (Capacitor)</span></div>
+    </div>
+  </section>
+
+  <!-- 02 -->
+  <section class="chapter" id="vision">
+    <div class="chapter-head"><span class="chapter-n">02 / 16</span></div>
+    <div class="kicker">Pourquoi Seneya existe</div>
+    <h2>Vision &amp; mission</h2>
+    <p class="lead-q">« Permettre aux exploitants de gérer leur ferme de manière centralisée et fiable, puis utiliser cette fiabilité comme base de confiance pour les connecter directement à des marchés, des solutions logistiques et une communauté professionnelle. »</p>
+    <p>Cette phrase condense l'ordre de dépendance qui structure tout le projet&nbsp;: on ne peut pas construire un marché de confiance sur des données qui n'existent pas. La fiabilité opérationnelle précède et conditionne l'accès au marché — pas l'inverse. C'est pourquoi Seneya se construit ERP d'abord, marketplace ensuite, contrairement à une place de marché pure qui agrégerait de l'offre sans se soucier de sa qualité vérifiable.</p>
+    <p>Le nom porte cette ambition&nbsp;: <b>Seneya</b> vient de <i>sɛnɛ</i>, « cultiver, l'agriculture » en dioula. La mission à moyen terme est de devenir le système d'exploitation de la ferme ouest-africaine — élevage d'abord, cultures ensuite&nbsp;: un seul compte, une seule ferme numérique, quelle que soit la combinaison d'activités, et pour l'exploitant qui le souhaite, la porte d'entrée vers un marché plus large que son réseau local.</p>
+  </section>
+
+  <!-- 03 -->
+  <section class="chapter" id="probleme">
+    <div class="chapter-head"><span class="chapter-n">03 / 16</span></div>
+    <div class="kicker">Le point de départ</div>
+    <h2>Le problème</h2>
+    <p>Quatre problèmes distincts mais liés empêchent aujourd'hui un éleveur ouest-africain de professionnaliser et développer son exploitation au-delà de sa portée locale.</p>
+
+    <h3>3.1 — Fiabilité des données d'élevage</h3>
+    <p>Les éleveurs n'ont généralement aucun suivi fiable de leur exploitation&nbsp;: effectifs, santé, reproduction, alimentation, stocks, finances. Quand un registre existe, il est tenu sur papier ou de mémoire — non structuré, non consultable, non partageable. Conséquence directe&nbsp;: des décisions prises à l'aveugle (quand faire saillir, quand vacciner, combien nourrir, quand vendre) et l'absence totale de preuve de qualité à présenter à un acheteur.</p>
+
+    <h3>3.2 — Accès au marché</h3>
+    <p>Les éleveurs vendent via des circuits informels et de multiples intermédiaires, sans visibilité sur la demande réelle. Du côté acheteur, les restaurants n'ont pas de fournisseurs fiables et réguliers&nbsp;: ils dépendent d'intermédiaires dont ils ne peuvent vérifier ni la régularité ni la qualité. Ni l'éleveur ni le restaurant n'ont de canal de confiance direct.</p>
+
+    <h3>3.3 — Logistique inter-villes</h3>
+    <p>Un éleveur basé à Bouaké qui souhaite vendre à Abidjan n'a généralement aucune solution simple pour acheminer ses animaux. L'absence de logistique accessible confine de fait sa zone de vente à son périmètre local, quelle que soit la demande ailleurs.</p>
+
+    <h3>3.4 — Fragmentation de la communauté</h3>
+    <p>Les éleveurs opèrent isolément, sans structure qui les incite à se regrouper, à mutualiser des coûts (un abonnement, par exemple) ou à se mesurer les uns aux autres pour progresser collectivement.</p>
+
+    <div class="box tint">
+      <div class="box-h">Ce qui relie les quatre</div>
+      <p>Chaque problème aggrave le suivant&nbsp;: sans données fiables (3.1), pas de signal de confiance sur un marché (3.2)&nbsp;; sans marché qui dépasse la zone locale, pas de besoin réel de logistique inter-villes (3.3)&nbsp;; et sans les deux premiers, aucune incitation forte à se structurer en communauté (3.4). C'est cette chaîne qui justifie le séquencement en quatre phases du chapitre&nbsp;8.</p>
+    </div>
+  </section>
+
+  <!-- 04 -->
+  <section class="chapter" id="marche">
+    <div class="chapter-head"><span class="chapter-n">04 / 16</span></div>
+    <div class="kicker">Qui utilise Seneya</div>
+    <h2>Marché &amp; utilisateurs cibles</h2>
+    <p>Seneya est une application à comptes multi-rôles&nbsp;: un même socle logiciel sert des utilisateurs aux besoins très différents, la navigation et les modules visibles s'adaptant au rôle plutôt que de multiplier les applications.</p>
+    <div class="twrap"><table>
+      <thead><tr><th>Rôle</th><th>Besoin principal</th><th>Ce que Seneya apporte</th></tr></thead>
+      <tbody>
+        <tr><td><b>Éleveur / exploitant</b></td><td>Piloter sa ferme, vendre sa production, écouler hors de sa zone</td><td>Seneya Ferme + Marché + Logistique + Coopérative</td></tr>
+        <tr><td><b>Équipe de la ferme</b></td><td>Saisir les soins, pesées, repas et ventes au quotidien</td><td>Accès par rôle&nbsp;: chacun ne voit et ne fait que ce qui le concerne</td></tr>
+        <tr><td><b>Restaurant</b></td><td>Sourcer des fournisseurs fiables et réguliers</td><td>Marché + traçabilité issue de l'ERP des éleveurs</td></tr>
+        <tr><td><b>Transporteur</b> (partenaire)</td><td>Recevoir des missions de transport d'animaux</td><td>Module Logistique — répertoire d'abord, intégration directe à terme</td></tr>
+      </tbody>
+    </table></div>
+    <p>Le marché initial est la <b>Côte d'Ivoire</b>, puis la <b>sous-région ouest-africaine</b>, avec un pilote du pilier Marché volontairement restreint à une seule filière et une seule zone géographique (chapitre&nbsp;8) avant toute extension. Les filières visées — lapins, volailles, pisciculture, bovins, caprins, ovins, apiculture — reflètent la diversité réelle des élevages périurbains et ruraux de la sous-région, plutôt qu'une seule filière dominante comme le font la plupart des outils internationaux calibrés sur l'élevage bovin extensif.</p>
+  </section>
+
+  <!-- 05 -->
+  <section class="chapter" id="solution">
+    <div class="chapter-head"><span class="chapter-n">05 / 16</span></div>
+    <div class="kicker">Comment Seneya répond</div>
+    <h2>La solution — quatre piliers</h2>
+    <p>Les quatre piliers correspondent terme à terme aux quatre problèmes du chapitre&nbsp;3. Ils sont développés dans cet ordre, chacun s'appuyant sur les données et l'usage générés par le précédent.</p>
+
+    <h3>Pilier 1 — Seneya Ferme (ERP)</h3>
+    <p>Un module par filière, plus des modules transverses partagés (Stocks, Ventes, Finances, Contacts, Activités, Tableau de bord, Équipe). Chaque filière s'active à la demande depuis un App Store, et toutes partagent le même stock, les mêmes contacts et les mêmes ventes. C'est la fondation&nbsp;: elle donne à l'exploitant une vision fiable de sa ferme et génère les données — santé, croissance, historique — qui serviront de signal de confiance sur le Marché. <b>C'est le pilier construit aujourd'hui</b> (chapitre&nbsp;6).</p>
+
+    <h3>Pilier 2 — Seneya Marché (éleveurs ↔ restaurants)</h3>
+    <p>Mise en relation directe&nbsp;: les éleveurs publient leurs sujets disponibles avec les données de traçabilité issues de l'ERP (santé, poids, historique)&nbsp;; les restaurants recherchent, comparent et commandent auprès de fournisseurs fiables. Le rôle du compte détermine les écrans visibles — même application, navigation adaptée.</p>
+
+    <h3>Pilier 3 — Seneya Logistique</h3>
+    <p>Un module pour sous-traiter le transport d'un sujet vendu vers une autre ville (ex.&nbsp;Bouaké→Abidjan) à des transporteurs partenaires. Rattaché à une transaction du Marché&nbsp;: une vente inter-villes déclenche une demande de transport.</p>
+
+    <h3>Pilier 4 — Communauté &amp; Coopératives</h3>
+    <p>Un exploitant peut créer une coopérative et y inviter d'autres éleveurs. Au-delà d'un quota de membres, la coopérative obtient une réduction d'abonnement. Un classement périodique entre coopératives — effectif, santé du cheptel, progression — renforce la rétention et crée une boucle de croissance par invitation, sans être un prérequis pour les trois autres piliers.</p>
+  </section>
+
+  <!-- 06 -->
+  <section class="chapter" id="produit">
+    <div class="chapter-head"><span class="chapter-n">06 / 16</span></div>
+    <div class="kicker">Ce qui existe déjà</div>
+    <h2>Le produit aujourd'hui</h2>
+    <p><b>Seneya Ferme</b> n'est plus une maquette&nbsp;: c'est une application Django en état de marche, multi-fermes, avec données en base PostgreSQL, comptes d'équipe et permissions par rôle. Les modules ci-dessous sont classés selon leur état réel.</p>
+
+    <h3>Filières</h3>
+    <div class="mgrid">
+      <div class="mcard"><div class="sw" style="background:#EC4899"></div><div class="nm">Lapins <span class="pill ok">disponible</span></div><div class="ds">Cheptel, reproduction avec contrôle de consanguinité, cages, santé, alimentation et vue d'ensemble.</div></div>
+      <div class="mcard"><div class="sw" style="background:#F59E0B"></div><div class="nm">Volailles <span class="pill ok">disponible</span></div><div class="ds">Bandes de pondeuses et de chair, suivi de ponte, santé, vaccins et alimentation.</div></div>
+      <div class="mcard"><div class="sw" style="background:#0EA5E9"></div><div class="nm">Pisciculture <span class="pill ok">disponible</span></div><div class="ds">Bassins, lots par espèce, pesées, croissance, densité et rationnement depuis le stock.</div></div>
+      <div class="mcard"><div class="sw" style="background:#EAB308"></div><div class="nm">Couvoir <span class="pill ok">disponible</span></div><div class="ds">Mise en incubation, mirage et éclosion, poussins versés au stock.</div></div>
+      <div class="mcard soon"><div class="sw" style="background:#3B82F6"></div><div class="nm">Bovins <span class="pill soon">à venir</span></div><div class="ds">Laitier et allaitant, généalogie, lactation et embouche.</div></div>
+      <div class="mcard soon"><div class="sw" style="background:#84CC16"></div><div class="nm">Caprins &amp; ovins <span class="pill soon">à venir</span></div><div class="ds">Chèvres et moutons&nbsp;: mise-bas, agnelage, production.</div></div>
+      <div class="mcard soon"><div class="sw" style="background:#D97706"></div><div class="nm">Apiculture <span class="pill soon">à venir</span></div><div class="ds">Ruches, essaims, récolte de miel et santé des colonies.</div></div>
+    </div>
+
+    <h3>Modules transverses</h3>
+    <div class="mgrid">
+      <div class="mcard"><div class="sw" style="background:#1E293B"></div><div class="nm">Tableau de bord <span class="pill ok">disponible</span></div><div class="ds">Vue consolidée&nbsp;: effectifs, naissances, pertes, revenus, alertes.</div></div>
+      <div class="mcard"><div class="sw" style="background:#A855F7"></div><div class="nm">Stock <span class="pill ok">disponible</span></div><div class="ds">Aliments, médicaments, matériel et animaux, par emplacement, avec conditionnements.</div></div>
+      <div class="mcard"><div class="sw" style="background:#22C55E"></div><div class="nm">Vente <span class="pill ok">disponible</span></div><div class="ds">Devis et factures en PDF, sorties de stock automatiques.</div></div>
+      <div class="mcard"><div class="sw" style="background:#EF4444"></div><div class="nm">Finances <span class="pill ok">disponible</span></div><div class="ds">Comptes (espèces, mobile money, banque), recettes, dépenses, virements, factures d'achat qui entrent en stock.</div></div>
+      <div class="mcard"><div class="sw" style="background:#8B5CF6"></div><div class="nm">Contacts <span class="pill ok">disponible</span></div><div class="ds">Clients, fournisseurs et partenaires.</div></div>
+      <div class="mcard"><div class="sw" style="background:#14B8A6"></div><div class="nm">Activités &amp; Équipe <span class="pill ok">disponible</span></div><div class="ds">Tâches de la ferme, invitations d'employés et droits par rôle.</div></div>
+      <div class="mcard soon"><div class="sw" style="background:#06B6D4"></div><div class="nm">Copilote IA <span class="pill soon">à venir</span></div><div class="ds">Recommandations, prévisions et détection d'anomalies.</div></div>
+    </div>
+
+    <div class="box">
+      <div class="box-h">Preuve de profondeur — la logique métier, pas seulement l'interface</div>
+      <p><b>Reproduction cunicole.</b> Trois modes d'élevage sourcés (intensif, semi-intensif, familial), suivi des gestations, mises-bas qui créent les portées, et <b>avertissement de consanguinité en temps réel</b> à chaque saillie.</p>
+      <p><b>Pisciculture.</b> Paramètres issus d'une recherche documentaire dédiée&nbsp;: densité, biomasse, taux de survie, croissance journalière et spécifique (SGR), indice de conversion alimentaire (IC), ration conseillée selon la taille des poissons, aliment sorti du stock à chaque repas.</p>
+      <p><b>Finances.</b> Une facture d'achat validée fait entrer la marchandise en stock et met à jour son coût de revient&nbsp;; les paiements partiels et les dettes fournisseurs sont suivis.</p>
+    </div>
+
+    <h3>Identité visuelle &amp; expérience</h3>
+    <div class="brand-demo">
+      <span class="logo" aria-label="Seneya">sene<span class="logo-y">y<svg class="logo-leaves" viewBox="0 0 60 40" aria-hidden="true">
+        <path d="M10 40C-1 35-8 22-8 6c12 6 20 18 18 34Z" fill="#2BA84A"/><path d="M10 40C5 28-1 16-8 6" stroke="#1E7A3C" stroke-width="1.6" fill="none"/>
+        <path d="M50 40c11-5 18-18 18-34-12 6-20 18-18 34Z" fill="#3CC45E"/><path d="M50 40c5-12 11-24 18-34" stroke="#1E7A3C" stroke-width="1.6" fill="none"/>
+      </svg></span>a</span>
+      <img src="assets/seneya-mark.svg" alt="Icône Seneya : le y-pousse">
+    </div>
+    <p>Le logo écrit <b>seneya</b> en minuscules, en Roboto Mono&nbsp;; le <b>y</b> vert, coiffé de deux feuilles, devient une jeune pousse — clin d'œil à <i>sɛnɛ</i>, cultiver. Seul, ce y-pousse sert d'icône d'application.</p>
+    <div class="swatches">
+      <div class="swatch"><i style="background:#5B2A9E"></i><span><b>Violet</b>#5B2A9E — marque</span></div>
+      <div class="swatch"><i style="background:#1B0B33"></i><span><b>Violet nuit</b>#1B0B33 — fonds</span></div>
+      <div class="swatch"><i style="background:#F5B400"></i><span><b>Or</b>#F5B400 — actions</span></div>
+      <div class="swatch"><i style="background:#2BA84A"></i><span><b>Vert</b>#2BA84A — le logo</span></div>
+    </div>
+    <p>L'interface reste volontairement simple, inspirée d'Odoo&nbsp;: un accueil en grille de modules plutôt qu'un tableau de bord dense, et dans chaque module un <b>ruban</b> unique qui réunit onglets et actions. Les saisies se font en quelques gestes sur téléphone, pour des utilisateurs dont l'aisance numérique varie fortement.</p>
+  </section>
+
+  <!-- 07 -->
+  <section class="chapter" id="modele">
+    <div class="chapter-head"><span class="chapter-n">07 / 16</span></div>
+    <div class="kicker">Comment Seneya génère du revenu</div>
+    <h2>Modèle économique</h2>
+    <p>Quatre sources de revenu potentielles ont été identifiées, une par pilier. Elles doivent être confrontées à des données réelles avant d'être figées (chapitre&nbsp;12) — ce sont des pistes structurantes, pas des prix arrêtés.</p>
+    <div class="twrap"><table>
+      <thead><tr><th>Source</th><th>Mécanisme</th><th>Rattaché à</th></tr></thead>
+      <tbody>
+        <tr><td><b>Abonnement Seneya Ferme</b></td><td>Les exploitants (et éventuellement les restaurants) paient un abonnement d'usage</td><td>Pilier 1 — revenu récurrent, indépendant du volume de transactions</td></tr>
+        <tr><td><b>Commission Marché</b></td><td>Pourcentage prélevé sur chaque vente réalisée via la mise en relation éleveur↔restaurant</td><td>Pilier 2</td></tr>
+        <tr><td><b>Marge logistique</b></td><td>Commission ou frais fixe sur les missions de transport sous-traitées</td><td>Pilier 3</td></tr>
+        <tr><td><b>Réduction coopérative</b></td><td>Mécanisme de croissance par invitation, pas une source de revenu directe — financé par l'effet volume sur les autres piliers</td><td>Pilier 4</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 08 -->
+  <section class="chapter" id="roadmap">
+    <div class="chapter-head"><span class="chapter-n">08 / 16</span></div>
+    <div class="kicker">Séquencement</div>
+    <h2>Stratégie d'exécution</h2>
+    <p>Un ERP, une marketplace à deux faces, une logistique et une couche communautaire sont chacun un métier à part entière&nbsp;: les mener de front serait risqué. Chaque pilier se construit sur l'acquis du précédent.</p>
+    <div class="phases">
+      <div class="phase done">
+        <div class="phase-tag">Phase 1 — en cours</div>
+        <h4>Seneya Ferme</h4>
+        <p><b>Fait&nbsp;:</b> portage complet sur Django + PostgreSQL, multi-fermes, trois filières et les modules transverses, application mobile en test. <b>Prochaines étapes&nbsp;:</b> mise en ligne sur seneya.com, 3 à 5 fermes pilotes accompagnées, puis approfondissement guidé par leurs retours (qualité de l'eau et pêches en pisciculture, encaissements et rentabilité par filière en finances).</p>
+      </div>
+      <div class="phase">
+        <div class="phase-tag">Phase 2</div>
+        <h4>Marché, en pilote restreint</h4>
+        <p>Lancer le Marché sur une seule filière et une seule zone (ex.&nbsp;lapins/volailles à Abidjan) plutôt que sur tout le pays, pour vérifier qu'il y a assez d'offre <i>et</i> de demande avant d'étendre. Introduit le rôle Restaurant.</p>
+      </div>
+      <div class="phase">
+        <div class="phase-tag">Phase 3</div>
+        <h4>Logistique, version minimale</h4>
+        <p>Démarrer par un répertoire de transporteurs partenaires plutôt qu'une plateforme complète de réservation. Ne construire la version complète que si la logistique bloque réellement les ventes en Phase&nbsp;2.</p>
+      </div>
+      <div class="phase">
+        <div class="phase-tag">Phase 4</div>
+        <h4>Coopératives &amp; classement</h4>
+        <p>Une fois les boucles Marché/Logistique stabilisées — un levier de rétention et de croissance, pas un problème urgent aujourd'hui.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 09 -->
+  <section class="chapter" id="stack">
+    <div class="chapter-head"><span class="chapter-n">09 / 16</span></div>
+    <div class="kicker">Comment c'est construit</div>
+    <h2>Stack technique</h2>
+    <p>Le prototype HTML/CSS/JS du départ a rempli son rôle — valider l'expérience et la profondeur métier. Il a été remplacé par la stack de production ci-dessous, aujourd'hui en place.</p>
+
+    <div class="twrap"><table>
+      <thead><tr><th>Couche</th><th>Choix</th><th>Pourquoi</th></tr></thead>
+      <tbody>
+        <tr><td><b>Backend</b></td><td>Django 5.2</td><td>App très orientée gestion, multi-modules, avec rôles&nbsp;: Django apporte l'ORM, l'authentification, les permissions et un back-office d'administration.</td></tr>
+        <tr><td><b>Base de données</b></td><td>PostgreSQL</td><td>Données relationnelles (cheptel, stocks, finances) avec de fortes contraintes d'intégrité entre filières et modules transverses.</td></tr>
+        <tr><td><b>Multi-fermes</b></td><td>Une adresse par ferme</td><td>Chaque exploitation a son sous-domaine et ses données isolées des autres fermes.</td></tr>
+        <tr><td><b>Frontend web</b></td><td>Templates Django + htmx</td><td>Pages dynamiques sans application JavaScript séparée à maintenir — vitesse d'exécution pour une petite équipe.</td></tr>
+        <tr><td><b>Mobile</b></td><td>Capacitor</td><td>Même modèle qu'Odoo&nbsp;: l'app web responsive empaquetée pour Android et iOS, avec accès aux fonctions natives (partage, caméra, notifications) au besoin.</td></tr>
+        <tr><td><b>Qualité</b></td><td>832 tests automatisés</td><td>Chaque module est testé (calculs métier, stocks, permissions) avant toute mise en production.</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="stack-diagram">
+      <div class="sd-row">
+        <div class="sd-box"><b>Navigateur</b><span>web responsive</span></div>
+        <div class="sd-box"><b>App mobile</b><span>Capacitor · Android / iOS</span></div>
+      </div>
+      <div class="sd-arrow">↓ ↓</div>
+      <div class="sd-row"><div class="sd-box" style="max-width:340px"><b>Django + htmx</b><span>une ferme par sous-domaine</span></div></div>
+      <div class="sd-arrow">↓</div>
+      <div class="sd-row"><div class="sd-box" style="max-width:340px"><b>PostgreSQL</b><span>cheptel, stocks, ventes, finances</span></div></div>
+    </div>
+    <p>Une API (Django REST Framework) sera ajoutée quand un client externe en aura besoin — Marché, intégrations tierces — sans imposer une architecture « API d'abord » dès maintenant.</p>
+  </section>
+
+  <!-- 10 -->
+  <section class="chapter" id="concurrence">
+    <div class="chapter-head"><span class="chapter-n">10 / 16</span></div>
+    <div class="kicker">Face à quoi Seneya se positionne</div>
+    <h2>Paysage concurrentiel</h2>
+    <div class="twrap"><table>
+      <thead><tr><th>Alternative actuelle</th><th>Limite</th></tr></thead>
+      <tbody>
+        <tr><td><b>Cahier papier / mémoire</b></td><td>Aucune traçabilité, aucune donnée exploitable ou partageable — le statu quo de la majorité des éleveurs.</td></tr>
+        <tr><td><b>Intermédiaires informels</b></td><td>Prix opaques, pas de relation directe éleveur↔acheteur, aucune incitation à la qualité vérifiable.</td></tr>
+        <tr><td><b>WhatsApp / réseaux sociaux</b></td><td>Utilisés de façon ponctuelle pour vendre, sans traçabilité, sans données structurées ni logistique associée.</td></tr>
+        <tr><td><b>ERP généralistes (Odoo &amp; assimilés)</b></td><td>Puissants mais génériques&nbsp;: aucun module natif pour la conduite d'un élevage multi-filière (reproduction, consanguinité, couvoir, rationnement…), et pas de marketplace ni de logistique pour écouler les animaux.</td></tr>
+        <tr><td><b>Apps agritech internationales</b></td><td>En général calibrées sur un seul type d'élevage extensif (bovin), peu adaptées à la diversité et à l'échelle des exploitations périurbaines ouest-africaines.</td></tr>
+      </tbody>
+    </table></div>
+    <p>La différenciation de Seneya tient à une combinaison rare&nbsp;: la spécificité métier par filière, une marketplace de confiance alimentée par les données de l'ERP plutôt que par des déclarations invérifiables, et une seule application multi-rôle plutôt qu'un empilement d'outils disjoints.</p>
+  </section>
+
+  <!-- 11 -->
+  <section class="chapter" id="risques">
+    <div class="chapter-head"><span class="chapter-n">11 / 16</span></div>
+    <div class="kicker">Ce qui peut faire échouer le projet</div>
+    <h2>Risques &amp; mitigations</h2>
+    <div class="twrap"><table>
+      <thead><tr><th>Risque</th><th>Mitigation retenue</th></tr></thead>
+      <tbody>
+        <tr><td><b>Construire sans le terrain</b><br>Beaucoup de fonctionnalités existent avant le premier utilisateur payant.</td><td>Geler les nouveaux modules le temps des fermes pilotes&nbsp;; ne développer que ce que leurs retours demandent.</td></tr>
+        <tr><td><b>Amorçage du Marché (cold start)</b><br>Une marketplace sans masse critique des deux côtés ne crée pas de valeur.</td><td>Pilote restreint à une filière et une zone en Phase&nbsp;2, plutôt qu'un lancement national.</td></tr>
+        <tr><td><b>Confiance / qualité</b><br>Un restaurant ne peut pas inspecter un animal à distance.</td><td>Les données de traçabilité de l'ERP sont le principal levier — d'où la priorité donnée à Seneya Ferme.</td></tr>
+        <tr><td><b>Coût de la logistique</b><br>Le transport d'animaux vivants comporte des risques (mortalité, perte de poids) qui pèsent sur les marges.</td><td>Démarrer par un répertoire de transporteurs partenaires plutôt qu'une plateforme complète.</td></tr>
+        <tr><td><b>Adoption / aisance numérique</b><br>Les exploitants n'ont pas tous la même aisance avec une application.</td><td>Interface volontairement simple (grille de modules, ruban unifié), saisie sur téléphone, accompagnement local.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 12 -->
+  <section class="chapter" id="hypotheses">
+    <div class="chapter-head"><span class="chapter-n">12 / 16</span></div>
+    <div class="kicker">Avant de figer quoi que ce soit</div>
+    <h2>Hypothèses à valider</h2>
+    <p>Ces validations conditionnent les décisions des chapitres 7 et 8 — elles ne sont pas encore tranchées.</p>
+    <ul>
+      <li>Avec 3 à 5 fermes pilotes&nbsp;: quels modules sont réellement utilisés au quotidien, et lesquels bloquent&nbsp;?</li>
+      <li>Combien un exploitant est-il prêt à payer par mois, et selon quelle taille d'exploitation&nbsp;?</li>
+      <li>Interroger des restaurants&nbsp;: changeraient-ils de fournisseur habituel, à quel prix et à quelles conditions&nbsp;?</li>
+      <li>Identifier la filière et la ville pilotes pour la Phase&nbsp;2 du Marché.</li>
+      <li>Identifier 1 à 2 transporteurs partenaires pour la version minimale de la Logistique.</li>
+    </ul>
+  </section>
+
+  <!-- 13 -->
+  <section class="chapter" id="financier">
+    <div class="chapter-head"><span class="chapter-n">13 / 16</span></div>
+    <div class="kicker">Ordres de grandeur, pas des promesses</div>
+    <h2>Projections financières illustratives</h2>
+    <div class="box warm">
+      <div class="box-h">Avertissement</div>
+      <p>Aucune de ces valeurs n'est validée par des données réelles — elles servent uniquement de cadre de discussion, en attendant les validations du chapitre&nbsp;12. Ne pas les citer comme des prévisions.</p>
+    </div>
+    <p>À titre d'illustration, si l'abonnement se situait entre <b>5 000 et 15 000&nbsp;FCFA/mois</b> selon la taille de l'exploitation, voici l'ordre de grandeur du revenu mensuel récurrent (MRR) selon trois scénarios d'adoption au terme de la Phase&nbsp;1&nbsp;:</p>
+    <div class="twrap"><table>
+      <thead><tr><th>Scénario</th><th>Exploitants payants</th><th>Abonnement moyen</th><th>MRR illustratif</th></tr></thead>
+      <tbody>
+        <tr><td>Bas</td><td class="tnum">100</td><td class="tnum">8&nbsp;000&nbsp;FCFA</td><td class="tnum"><b>800&nbsp;000&nbsp;FCFA</b></td></tr>
+        <tr><td>Moyen</td><td class="tnum">500</td><td class="tnum">8&nbsp;000&nbsp;FCFA</td><td class="tnum"><b>4&nbsp;000&nbsp;000&nbsp;FCFA</b></td></tr>
+        <tr><td>Haut</td><td class="tnum">2&nbsp;000</td><td class="tnum">8&nbsp;000&nbsp;FCFA</td><td class="tnum"><b>16&nbsp;000&nbsp;000&nbsp;FCFA</b></td></tr>
+      </tbody>
+    </table></div>
+    <p>Le Marché (Phase&nbsp;2) ajouterait une commission — pour repère, chaque point de commission sur un volume mensuel de 50&nbsp;millions&nbsp;FCFA de transactions représente 500&nbsp;000&nbsp;FCFA de revenu additionnel. Ce volume dépend entièrement du pilote restreint et ne peut pas être estimé sérieusement avant.</p>
+  </section>
+
+  <!-- 14 -->
+  <section class="chapter" id="equipe">
+    <div class="chapter-head"><span class="chapter-n">14 / 16</span></div>
+    <div class="kicker">Rejoindre le projet</div>
+    <h2>L'équipe recherchée</h2>
+    <p>Le socle technique est en place&nbsp;: le besoin le plus urgent est désormais sur le terrain. La rémunération ou la participation est à discuter selon le profil et le niveau d'implication (équité, revenu différé ou hybride)&nbsp;; aucune structure n'est imposée à ce stade.</p>
+    <div class="roles">
+      <div class="role"><span class="tag">Priorité 1</span><div class="role-body"><h4>Responsable terrain / développement commercial</h4><p>Recruter et accompagner les fermes pilotes, recueillir leurs retours, tester les prix d'abonnement&nbsp;; puis préparer le pilote Marché (restaurants, transporteurs).</p></div></div>
+      <div class="role"><span class="tag">Priorité 1</span><div class="role-body"><h4>Développeur·se Django</h4><p>Mise en production et exploitation (serveur, sauvegardes, supervision), approfondissement des filières, API pour le Marché.</p></div></div>
+      <div class="role"><span class="tag">Priorité 2</span><div class="role-body"><h4>Développeur·se mobile / frontend</h4><p>Finalisation de l'application Capacitor (Android d'abord), expérience hors connexion, notifications.</p></div></div>
+      <div class="role"><span class="tag later">Consultatif</span><div class="role-body"><h4>Conseiller technique élevage &amp; agriculture</h4><p>Validation des workflows métier par filière (reproduction, santé, alimentation, qualité de l'eau) et préparation des modules cultures.</p></div></div>
+    </div>
+  </section>
+
+  <!-- 15 -->
+  <section class="chapter" id="glossaire">
+    <div class="chapter-head"><span class="chapter-n">15 / 16</span></div>
+    <div class="kicker">Repères</div>
+    <h2>Glossaire</h2>
+    <div class="twrap"><table>
+      <tbody>
+        <tr><td class="mono" style="white-space:nowrap"><b>Seneya</b></td><td>L'entreprise et l'application. De <i>sɛnɛ</i>, « cultiver » en dioula.</td></tr>
+        <tr><td class="mono" style="white-space:nowrap"><b>Seneya Ferme</b></td><td>Le pilier ERP&nbsp;: la gestion de l'exploitation (anciennement « Animalia »).</td></tr>
+        <tr><td class="mono" style="white-space:nowrap"><b>Filière</b></td><td>Type d'élevage géré comme un module indépendant (lapins, volailles, pisciculture…).</td></tr>
+        <tr><td class="mono" style="white-space:nowrap"><b>App Store</b></td><td>Écran où chaque ferme active les modules dont elle a besoin.</td></tr>
+        <tr><td class="mono" style="white-space:nowrap"><b>Ruban</b></td><td>Bandeau unique réunissant onglets et actions d'un module, à la manière d'Excel/Word.</td></tr>
+        <tr><td class="mono" style="white-space:nowrap"><b>IC / SGR</b></td><td>Indice de conversion alimentaire (kg d'aliment par kg de poisson produit) et taux de croissance spécifique.</td></tr>
+        <tr><td class="mono" style="white-space:nowrap"><b>Pilote restreint</b></td><td>Lancement limité à une filière et une ville avant extension.</td></tr>
+        <tr><td class="mono" style="white-space:nowrap"><b>Cold start</b></td><td>Difficulté à amorcer une marketplace tant que l'offre et la demande n'atteignent pas une masse critique.</td></tr>
+        <tr><td class="mono" style="white-space:nowrap"><b>MRR</b></td><td>Revenu mensuel récurrent, issu principalement des abonnements.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 16 -->
+  <section class="chapter" id="annexe">
+    <div class="chapter-head"><span class="chapter-n">16 / 16</span></div>
+    <div class="kicker">État des lieux détaillé</div>
+    <h2>Annexe — état du produit</h2>
+    <p>Trois projets composent aujourd'hui Seneya&nbsp;: l'application <b>Seneya Ferme</b> (Django), le <b>site de l'entreprise</b> (présentation des produits, demande de rappel) et la <b>coquille mobile</b> Capacitor.</p>
+    <div class="twrap"><table>
+      <thead><tr><th>Élément</th><th>État</th></tr></thead>
+      <tbody>
+        <tr><td><b>Lapins</b></td><td>Complet&nbsp;: cheptel, reproduction avec logique métier, cages, santé, alimentation, vue d'ensemble, fiches imprimables.</td></tr>
+        <tr><td><b>Volailles &amp; Couvoir</b></td><td>Complets&nbsp;: bandes, ponte, santé, vaccins, alimentation&nbsp;; incubation, mirage, éclosion avec transfert au stock.</td></tr>
+        <tr><td><b>Pisciculture</b></td><td>Bassins, lots, pesées, mortalités, transferts et tris, alimentation depuis le stock. À venir&nbsp;: qualité de l'eau et santé, pêches et vente, écloserie.</td></tr>
+        <tr><td><b>Finances</b></td><td>Comptes, opérations, virements, achats vers le stock, paiements et dettes. À venir&nbsp;: encaissement des ventes, rentabilité par filière.</td></tr>
+        <tr><td><b>Stocks, Ventes, Contacts, Activités, Tableau de bord</b></td><td>Disponibles et reliés entre eux&nbsp;; devis et factures en PDF.</td></tr>
+        <tr><td><b>Plateforme</b></td><td>Inscription d'une ferme en quelques étapes, une adresse par ferme, équipe et permissions par rôle, App Store des modules.</td></tr>
+        <tr><td><b>Mobile</b></td><td>Coquille Capacitor fonctionnelle sur Android, en test.</td></tr>
+        <tr><td><b>Mise en ligne</b></td><td>À faire&nbsp;: hébergement, nom de domaine seneya.com, sauvegardes.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <footer>
+    <p>seneya — Dossier de présentation · Octobre 2026</p>
+  </footer>
+
+</div>
+</body>
+</html>

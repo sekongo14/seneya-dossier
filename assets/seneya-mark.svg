@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Seneya : le y-pousse, sans police (formes vectorielles) -->
+  <g transform="translate(6 4) scale(.88)">
+  <path d="M33 44 51 74M69 44 45 96" stroke="#2BA84A" stroke-width="13" stroke-linecap="round" fill="none"/>
+  <path d="M33 42C18 38 11 24 13 8c13 6 22 18 20 34Z" fill="#2BA84A"/>
+  <path d="M33 42C28 30 21 18 13 8" stroke="#1E7A3C" stroke-width="1.8" fill="none"/>
+  <path d="M69 42c15-4 22-18 20-34-13 6-22 18-20 34Z" fill="#3CC45E"/>
+  <path d="M69 42c5-12 12-24 20-34" stroke="#1E7A3C" stroke-width="1.8" fill="none"/>
+  </g>
+</svg>
