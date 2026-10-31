@@ -243,11 +243,12 @@
     <p>Seneya part d'un constat simple&nbsp;: les éleveurs et agriculteurs d'Afrique de l'Ouest gèrent des exploitations à forte valeur — lapins, volailles, poissons, bovins, caprins… — sans outil de suivi fiable. Le registre, quand il existe, tient sur un cahier ou dans la mémoire de l'exploitant. Résultat&nbsp;: des décisions à l'aveugle, aucune traçabilité, et aucune preuve de qualité à présenter à un acheteur exigeant.</p>
     <p>Ce déficit de fiabilité a un effet en cascade&nbsp;: sans données de traçabilité, un éleveur ne peut pas démontrer la qualité de sa production à un restaurant, reste dépendant d'intermédiaires informels, et n'a aucune solution simple pour vendre au-delà de sa zone géographique immédiate.</p>
     <p>Seneya s'attaque à ce problème par séquence plutôt que d'un bloc. La <b>Phase&nbsp;1</b> construit l'ERP de la ferme — <b>Seneya Ferme</b> — module par filière, avec une interface pensée pour des utilisateurs à aisance numérique variable. C'est la fondation&nbsp;: elle crée l'habitude d'usage et la base de données de confiance (santé, croissance, historique) qui deviendra l'atout différenciant des trois piliers suivants — un <b>Marché</b> direct éleveurs↔restaurants, une <b>Logistique</b> inter-villes sous-traitée, et une couche <b>Communauté &amp; Coopératives</b>.</p>
-    <p>Le prototype statique du départ a été <b>entièrement porté sur une stack de production</b> (Django&nbsp;+&nbsp;PostgreSQL). L'application gère aujourd'hui plusieurs fermes, chacune sur sa propre adresse, avec trois filières complètes (Lapins, Volailles, Pisciculture), un couvoir, et les modules transverses Stocks, Ventes, Finances, Contacts, Activités, Tableau de bord et Équipe. Elle est couverte par plus de 800 tests automatisés. La prochaine étape n'est plus technique&nbsp;: <b>mettre l'application en ligne et la confier à des fermes pilotes</b>.</p>
+    <p>Le prototype statique du départ a été <b>entièrement porté sur une stack de production</b> (Django&nbsp;+&nbsp;PostgreSQL). L'application gère aujourd'hui plusieurs fermes, chacune sur sa propre adresse, avec trois filières complètes (Lapins, Volailles, Pisciculture), un couvoir, et les modules transverses Stocks, Ventes, Finances, Contacts, Activités, Tableau de bord et Équipe. Elle a désormais une <b>caisse</b> pour les boutiques et étals, et un <b>Réseau Seneya</b>&nbsp;: une carte des provenderies et couvoirs où l'éleveur commande son aliment et réserve ses poussins sans quitter l'application. Elle est couverte par plus de 900 tests automatisés.</p>
+    <p>Le modèle économique est tranché&nbsp;: <b>l'application de gestion est gratuite</b>. Seneya se rémunère sur les échanges qu'elle provoque — commandes entre éleveurs et fournisseurs, ventes aux restaurants et hôtels, option payante «&nbsp;vendre plus vite&nbsp;». La prochaine étape n'est plus technique&nbsp;: <b>mettre l'application en ligne et la confier à des fermes pilotes</b>.</p>
     <div class="figures">
       <div class="figure"><b>3</b><span>filières complètes&nbsp;: lapins, volailles, pisciculture</span></div>
-      <div class="figure"><b>9</b><span>modules disponibles dans l'App Store</span></div>
-      <div class="figure"><b>832</b><span>tests automatisés</span></div>
+      <div class="figure"><b>0</b><span>FCFA&nbsp;: l'application de gestion est gratuite</span></div>
+      <div class="figure"><b>910</b><span>tests automatisés</span></div>
       <div class="figure"><b>1</b><span>application web + mobile (Capacitor)</span></div>
     </div>
   </section>
@@ -298,7 +299,9 @@
       <tbody>
         <tr><td><b>Éleveur / exploitant</b></td><td>Piloter sa ferme, vendre sa production, écouler hors de sa zone</td><td>Seneya Ferme + Marché + Logistique + Coopérative</td></tr>
         <tr><td><b>Équipe de la ferme</b></td><td>Saisir les soins, pesées, repas et ventes au quotidien</td><td>Accès par rôle&nbsp;: chacun ne voit et ne fait que ce qui le concerne</td></tr>
-        <tr><td><b>Restaurant</b></td><td>Sourcer des fournisseurs fiables et réguliers</td><td>Marché + traçabilité issue de l'ERP des éleveurs</td></tr>
+        <tr><td><b>Provenderie, vendeur de matériel</b></td><td>Gérer son stock et sa caisse, trouver des clients éleveurs</td><td>Stock + caisse gratuits, visibilité sur la carte du Réseau, commandes reçues dans l'app</td></tr>
+        <tr><td><b>Couvoir</b></td><td>Suivre ses couvées, remplir ses éclosions à l'avance</td><td>Module Couvoir + réservations de poussins par les éleveurs proches</td></tr>
+        <tr><td><b>Restaurant, hôtel, maquis</b></td><td>Sourcer des fournisseurs fiables et réguliers</td><td>Marché + traçabilité issue de l'ERP des éleveurs&nbsp;; la caisse Seneya en fait un acheteur déjà dans le système</td></tr>
         <tr><td><b>Transporteur</b> (partenaire)</td><td>Recevoir des missions de transport d'animaux</td><td>Module Logistique — répertoire d'abord, intégration directe à terme</td></tr>
       </tbody>
     </table></div>
@@ -315,6 +318,12 @@
     <h3>Pilier 1 — Seneya Ferme (ERP)</h3>
     <p>Un module par filière, plus des modules transverses partagés (Stocks, Ventes, Finances, Contacts, Activités, Tableau de bord, Équipe). Chaque filière s'active à la demande depuis un App Store, et toutes partagent le même stock, les mêmes contacts et les mêmes ventes. C'est la fondation&nbsp;: elle donne à l'exploitant une vision fiable de sa ferme et génère les données — santé, croissance, historique — qui serviront de signal de confiance sur le Marché. <b>C'est le pilier construit aujourd'hui</b> (chapitre&nbsp;6).</p>
 
+    <div class="box tint">
+      <div class="box-h">Le pont entre le pilier 1 et le pilier 2&nbsp;: le Réseau Seneya</div>
+      <p>Avant les restaurants, Seneya relie l'éleveur à <b>ses propres fournisseurs</b>. Sur une carte, il voit les provenderies et couvoirs les plus proches, leur stock et les lots en couvaison&nbsp;; il commande son aliment, réserve ses poussins (en voyant, de façon anonyme, ceux déjà réservés par d'autres), et la livraison entre directement dans son stock. La provenderie et le couvoir reçoivent gratuitement un logiciel de gestion — stock, caisse, couvées&nbsp;; ils restent pour les clients que le Réseau leur amène.</p>
+      <p>C'est un effet de réseau à deux faces&nbsp;: plus il y a d'éleveurs, plus les fournisseurs veulent être sur Seneya, et inversement. Et Seneya se trouve au milieu de chaque commande, ce qui rend la commission possible.</p>
+    </div>
+
     <h3>Pilier 2 — Seneya Marché (éleveurs ↔ restaurants)</h3>
     <p>Mise en relation directe&nbsp;: les éleveurs publient leurs sujets disponibles avec les données de traçabilité issues de l'ERP (santé, poids, historique)&nbsp;; les restaurants recherchent, comparent et commandent auprès de fournisseurs fiables. Le rôle du compte détermine les écrans visibles — même application, navigation adaptée.</p>
 
@@ -322,7 +331,7 @@
     <p>Un module pour sous-traiter le transport d'un sujet vendu vers une autre ville (ex.&nbsp;Bouaké→Abidjan) à des transporteurs partenaires. Rattaché à une transaction du Marché&nbsp;: une vente inter-villes déclenche une demande de transport.</p>
 
     <h3>Pilier 4 — Communauté &amp; Coopératives</h3>
-    <p>Un exploitant peut créer une coopérative et y inviter d'autres éleveurs. Au-delà d'un quota de membres, la coopérative obtient une réduction d'abonnement. Un classement périodique entre coopératives — effectif, santé du cheptel, progression — renforce la rétention et crée une boucle de croissance par invitation, sans être un prérequis pour les trois autres piliers.</p>
+    <p>Un exploitant peut créer une coopérative et y inviter d'autres éleveurs. Au-delà d'un quota de membres, la coopérative obtient des avantages collectifs (commission réduite, mise en avant sur le Marché, achats groupés d'aliment via le Réseau). Un classement périodique entre coopératives — effectif, santé du cheptel, progression — renforce la rétention et crée une boucle de croissance par invitation, sans être un prérequis pour les trois autres piliers.</p>
   </section>
 
   <!-- 06 -->
@@ -336,7 +345,7 @@
     <div class="mgrid">
       <div class="mcard"><div class="sw" style="background:#EC4899"></div><div class="nm">Lapins <span class="pill ok">disponible</span></div><div class="ds">Cheptel, reproduction avec contrôle de consanguinité, cages, santé, alimentation et vue d'ensemble.</div></div>
       <div class="mcard"><div class="sw" style="background:#F59E0B"></div><div class="nm">Volailles <span class="pill ok">disponible</span></div><div class="ds">Bandes de pondeuses et de chair, suivi de ponte, santé, vaccins et alimentation.</div></div>
-      <div class="mcard"><div class="sw" style="background:#0EA5E9"></div><div class="nm">Pisciculture <span class="pill ok">disponible</span></div><div class="ds">Bassins, lots par espèce, pesées, croissance, densité et rationnement depuis le stock.</div></div>
+      <div class="mcard"><div class="sw" style="background:#0EA5E9"></div><div class="nm">Pisciculture <span class="pill ok">disponible</span></div><div class="ds">Bassins, lots par espèce, croissance, rationnement depuis le stock, qualité de l'eau et santé, pêches vendues au kilo, écloserie.</div></div>
       <div class="mcard"><div class="sw" style="background:#EAB308"></div><div class="nm">Couvoir <span class="pill ok">disponible</span></div><div class="ds">Mise en incubation, mirage et éclosion, poussins versés au stock.</div></div>
       <div class="mcard soon"><div class="sw" style="background:#3B82F6"></div><div class="nm">Bovins <span class="pill soon">à venir</span></div><div class="ds">Laitier et allaitant, généalogie, lactation et embouche.</div></div>
       <div class="mcard soon"><div class="sw" style="background:#84CC16"></div><div class="nm">Caprins &amp; ovins <span class="pill soon">à venir</span></div><div class="ds">Chèvres et moutons&nbsp;: mise-bas, agnelage, production.</div></div>
@@ -347,10 +356,11 @@
     <div class="mgrid">
       <div class="mcard"><div class="sw" style="background:#1E293B"></div><div class="nm">Tableau de bord <span class="pill ok">disponible</span></div><div class="ds">Vue consolidée&nbsp;: effectifs, naissances, pertes, revenus, alertes.</div></div>
       <div class="mcard"><div class="sw" style="background:#A855F7"></div><div class="nm">Stock <span class="pill ok">disponible</span></div><div class="ds">Aliments, médicaments, matériel et animaux, par emplacement, avec conditionnements.</div></div>
-      <div class="mcard"><div class="sw" style="background:#22C55E"></div><div class="nm">Vente <span class="pill ok">disponible</span></div><div class="ds">Devis et factures en PDF, sorties de stock automatiques.</div></div>
-      <div class="mcard"><div class="sw" style="background:#EF4444"></div><div class="nm">Finances <span class="pill ok">disponible</span></div><div class="ds">Comptes (espèces, mobile money, banque), recettes, dépenses, virements, factures d'achat qui entrent en stock.</div></div>
+      <div class="mcard"><div class="sw" style="background:#22C55E"></div><div class="nm">Vente &amp; points de vente <span class="pill ok">disponible</span></div><div class="ds">Devis et factures en PDF, et une caisse façon Odoo pour les boutiques et étals&nbsp;: vente par conditionnement, ticket imprimé, monnaie à rendre, clôture de caisse. Chaque point de vente a son stock.</div></div>
+      <div class="mcard"><div class="sw" style="background:#EF4444"></div><div class="nm">Finances <span class="pill ok">disponible</span></div><div class="ds">Comptes (espèces, mobile money, banque), recettes, dépenses, virements, achats qui entrent en stock, encaissement des ventes et rentabilité par filière.</div></div>
       <div class="mcard"><div class="sw" style="background:#8B5CF6"></div><div class="nm">Contacts <span class="pill ok">disponible</span></div><div class="ds">Clients, fournisseurs et partenaires.</div></div>
       <div class="mcard"><div class="sw" style="background:#14B8A6"></div><div class="nm">Activités &amp; Équipe <span class="pill ok">disponible</span></div><div class="ds">Tâches de la ferme, invitations d'employés et droits par rôle.</div></div>
+      <div class="mcard"><div class="sw" style="background:#5B2A9E"></div><div class="nm">Réseau Seneya <span class="pill ok">disponible</span></div><div class="ds">Carte des provenderies, couvoirs, vétérinaires et éleveurs&nbsp;; commandes d'aliment, réservations de poussins, notifications et paiements déclarés.</div></div>
       <div class="mcard soon"><div class="sw" style="background:#06B6D4"></div><div class="nm">Copilote IA <span class="pill soon">à venir</span></div><div class="ds">Recommandations, prévisions et détection d'anomalies.</div></div>
     </div>
 
@@ -358,7 +368,8 @@
       <div class="box-h">Preuve de profondeur — la logique métier, pas seulement l'interface</div>
       <p><b>Reproduction cunicole.</b> Trois modes d'élevage sourcés (intensif, semi-intensif, familial), suivi des gestations, mises-bas qui créent les portées, et <b>avertissement de consanguinité en temps réel</b> à chaque saillie.</p>
       <p><b>Pisciculture.</b> Paramètres issus d'une recherche documentaire dédiée&nbsp;: densité, biomasse, taux de survie, croissance journalière et spécifique (SGR), indice de conversion alimentaire (IC), ration conseillée selon la taille des poissons, aliment sorti du stock à chaque repas.</p>
-      <p><b>Finances.</b> Une facture d'achat validée fait entrer la marchandise en stock et met à jour son coût de revient&nbsp;; les paiements partiels et les dettes fournisseurs sont suivis.</p>
+      <p><b>Finances.</b> Une facture d'achat validée fait entrer la marchandise en stock et met à jour son coût de revient&nbsp;; les paiements partiels et les dettes fournisseurs sont suivis&nbsp;; chaque filière a son compte de résultat, avec des alertes sur le tableau de bord.</p>
+      <p><b>Réseau.</b> Une commande acceptée par une provenderie devient un devis chez elle&nbsp;; à la livraison, la marchandise sort de son stock et entre dans celui de l'éleveur. Côté couvoir, chaque lot en couvaison connaît sa date d'éclosion prévue et ses poussins encore disponibles. Les deux parties sont prévenues sous la cloche de l'application, déclarent et confirment le paiement, et la commission Seneya est calculée à la livraison. Seul ce que chaque compte choisit de publier sort de sa ferme&nbsp;: profil masqué par défaut, données privées cloisonnées.</p>
     </div>
 
     <h3>Identité visuelle &amp; expérience</h3>
@@ -384,16 +395,27 @@
     <div class="chapter-head"><span class="chapter-n">07 / 16</span></div>
     <div class="kicker">Comment Seneya génère du revenu</div>
     <h2>Modèle économique</h2>
-    <p>Quatre sources de revenu potentielles ont été identifiées, une par pilier. Elles doivent être confrontées à des données réelles avant d'être figées (chapitre&nbsp;12) — ce sont des pistes structurantes, pas des prix arrêtés.</p>
+    <p>Décision d'octobre 2026&nbsp;: <b>l'application de gestion est gratuite</b>, pour l'éleveur comme pour ses fournisseurs. L'abonnement mensuel envisagé au départ est abandonné. Seneya se rémunère sur la valeur qu'elle fait circuler entre les comptes, pas sur l'outil lui-même.</p>
+    <div class="box tint">
+      <div class="box-h">Pourquoi la gratuité</div>
+      <p>Une recherche sur YouTube en Côte d'Ivoire montre un très fort intérêt pour l'élevage vu comme un business (100&nbsp;000 à 650&nbsp;000 vues par vidéo) et un intérêt très faible pour les logiciels de gestion (moins de 10&nbsp;000 vues). Faire payer un outil de gestion est le principal risque&nbsp;; aider à <b>acheter moins cher et vendre plus vite</b> est ce que les éleveurs cherchent.</p>
+    </div>
     <div class="twrap"><table>
       <thead><tr><th>Source</th><th>Mécanisme</th><th>Rattaché à</th></tr></thead>
       <tbody>
-        <tr><td><b>Abonnement Seneya Ferme</b></td><td>Les exploitants (et éventuellement les restaurants) paient un abonnement d'usage</td><td>Pilier 1 — revenu récurrent, indépendant du volume de transactions</td></tr>
-        <tr><td><b>Commission Marché</b></td><td>Pourcentage prélevé sur chaque vente réalisée via la mise en relation éleveur↔restaurant</td><td>Pilier 2</td></tr>
+        <tr><td><b>Seneya Ferme</b></td><td>Gratuit&nbsp;: gestion de la ferme, stock, caisse, finances. Il crée l'usage et les données de confiance.</td><td>Pilier 1 — produit d'appel, pas de revenu direct</td></tr>
+        <tr><td><b>Commission Réseau</b></td><td>Pourcentage sur les commandes d'aliment, de matériel et de poussins passées entre éleveurs et fournisseurs via l'application, réglées par mobile money</td><td>Pont piliers 1→2 — premier revenu, déjà prévu dans le code</td></tr>
+        <tr><td><b>Commission Marché</b></td><td>Pourcentage sur chaque vente réalisée entre un éleveur et un acheteur partenaire (restaurants, hôtels, maquis)</td><td>Pilier 2</td></tr>
+        <tr><td><b>«&nbsp;Vendre plus vite&nbsp;»</b></td><td>Option payante pour l'éleveur qui veut écouler ses sujets rapidement&nbsp;: mise en avant auprès des acheteurs, alertes prioritaires</td><td>Pilier 2</td></tr>
         <tr><td><b>Marge logistique</b></td><td>Commission ou frais fixe sur les missions de transport sous-traitées</td><td>Pilier 3</td></tr>
-        <tr><td><b>Réduction coopérative</b></td><td>Mécanisme de croissance par invitation, pas une source de revenu directe — financé par l'effet volume sur les autres piliers</td><td>Pilier 4</td></tr>
+        <tr><td><b>Avantages coopérative</b></td><td>Levier de croissance par invitation, pas une source de revenu directe — financé par l'effet volume sur les autres sources</td><td>Pilier 4</td></tr>
       </tbody>
     </table></div>
+    <p>Trois garde-fous accompagnent ce modèle&nbsp;: la <b>commission par vente plutôt qu'un abonnement vendeur</b>, pour ne rien coûter tant que rien n'est vendu&nbsp;; une protection contre la <b>désintermédiation</b> (le paiement et le suivi dans l'app doivent valoir plus que le contournement par téléphone)&nbsp;; et le <b>consentement explicite</b> de l'éleveur avant tout partage de ses données avec un acheteur, conformément à la loi ivoirienne sur les données personnelles (ARTCI).</p>
+    <div class="box">
+      <div class="box-h">La caisse, une ouverture vers d'autres commerces — mais pas tout de suite</div>
+      <p>La caisse pourrait servir à n'importe quel commerce. Ce n'est pas la cible&nbsp;: le marché des caisses génériques est déjà occupé par des outils gratuits (Loyverse, Odoo…), et Seneya y perdrait ce qui la distingue — suivre un produit de la ferme jusqu'au comptoir. La caisse vise d'abord les <b>commerces liés à l'élevage</b>&nbsp;: boutiques des fermes, provenderies, pharmacies vétérinaires, poissonneries, boucheries et volaillers, maquis et restaurants. Un restaurant qui encaisse avec Seneya est un acheteur déjà dans le système&nbsp;: quand son stock de poulet baisse, Seneya peut lui proposer de commander à une ferme. Une offre «&nbsp;Seneya Commerce&nbsp;» généraliste ne viendra que si ces premiers commerces l'adoptent.</p>
+    </div>
   </section>
 
   <!-- 08 -->
@@ -406,12 +428,12 @@
       <div class="phase done">
         <div class="phase-tag">Phase 1 — en cours</div>
         <h4>Seneya Ferme</h4>
-        <p><b>Fait&nbsp;:</b> portage complet sur Django + PostgreSQL, multi-fermes, trois filières et les modules transverses, application mobile en test. <b>Prochaines étapes&nbsp;:</b> mise en ligne sur seneya.com, 3 à 5 fermes pilotes accompagnées, puis approfondissement guidé par leurs retours (qualité de l'eau et pêches en pisciculture, encaissements et rentabilité par filière en finances).</p>
+        <p><b>Fait&nbsp;:</b> portage complet sur Django + PostgreSQL, multi-fermes, trois filières et les modules transverses (pisciculture et finances complètes), caisse des points de vente, Réseau Seneya (carte, commandes aux provenderies, réservations de poussins), application mobile en test. <b>Prochaines étapes&nbsp;:</b> mise en ligne sur seneya.com, 3 à 5 fermes pilotes accompagnées — dont celles qui ont une boutique ou vendent au marché, pour tester la caisse — puis 2 ou 3 fournisseurs proches d'elles (une provenderie, un couvoir) sur le Réseau.</p>
       </div>
       <div class="phase">
         <div class="phase-tag">Phase 2</div>
         <h4>Marché, en pilote restreint</h4>
-        <p>Lancer le Marché sur une seule filière et une seule zone (ex.&nbsp;lapins/volailles à Abidjan) plutôt que sur tout le pays, pour vérifier qu'il y a assez d'offre <i>et</i> de demande avant d'étendre. Introduit le rôle Restaurant.</p>
+        <p>Lancer le Marché sur une seule filière et une seule zone (ex.&nbsp;lapins/volailles à Abidjan) plutôt que sur tout le pays, pour vérifier qu'il y a assez d'offre <i>et</i> de demande avant d'étendre. Commencer <b>à la main</b>&nbsp;: mise en relation par WhatsApp entre les fermes pilotes et 5 restaurants, avant de coder la place de marché. Introduit le rôle Restaurant, puis l'option «&nbsp;vendre plus vite&nbsp;» et le paiement par mobile money.</p>
       </div>
       <div class="phase">
         <div class="phase-tag">Phase 3</div>
@@ -438,10 +460,11 @@
       <tbody>
         <tr><td><b>Backend</b></td><td>Django 5.2</td><td>App très orientée gestion, multi-modules, avec rôles&nbsp;: Django apporte l'ORM, l'authentification, les permissions et un back-office d'administration.</td></tr>
         <tr><td><b>Base de données</b></td><td>PostgreSQL</td><td>Données relationnelles (cheptel, stocks, finances) avec de fortes contraintes d'intégrité entre filières et modules transverses.</td></tr>
-        <tr><td><b>Multi-fermes</b></td><td>Une adresse par ferme</td><td>Chaque exploitation a son sous-domaine et ses données isolées des autres fermes.</td></tr>
+        <tr><td><b>Multi-fermes</b></td><td>Une adresse par ferme</td><td>Chaque exploitation a son sous-domaine et ses données isolées des autres fermes&nbsp;; une couche «&nbsp;réseau&nbsp;» commune ne partage que ce que chaque compte a choisi de publier.</td></tr>
         <tr><td><b>Frontend web</b></td><td>Templates Django + htmx</td><td>Pages dynamiques sans application JavaScript séparée à maintenir — vitesse d'exécution pour une petite équipe.</td></tr>
+        <tr><td><b>Cartographie</b></td><td>MapLibre + OpenStreetMap</td><td>Carte du Réseau aux couleurs de Seneya, sans licence payante&nbsp;; les fonds de carte viennent d'OpenFreeMap.</td></tr>
         <tr><td><b>Mobile</b></td><td>Capacitor</td><td>Même modèle qu'Odoo&nbsp;: l'app web responsive empaquetée pour Android et iOS, avec accès aux fonctions natives (partage, caméra, notifications) au besoin.</td></tr>
-        <tr><td><b>Qualité</b></td><td>832 tests automatisés</td><td>Chaque module est testé (calculs métier, stocks, permissions) avant toute mise en production.</td></tr>
+        <tr><td><b>Qualité</b></td><td>910 tests automatisés</td><td>Chaque module est testé (calculs métier, stocks, permissions) avant toute mise en production.</td></tr>
       </tbody>
     </table></div>
 
@@ -470,10 +493,11 @@
         <tr><td><b>Intermédiaires informels</b></td><td>Prix opaques, pas de relation directe éleveur↔acheteur, aucune incitation à la qualité vérifiable.</td></tr>
         <tr><td><b>WhatsApp / réseaux sociaux</b></td><td>Utilisés de façon ponctuelle pour vendre, sans traçabilité, sans données structurées ni logistique associée.</td></tr>
         <tr><td><b>ERP généralistes (Odoo &amp; assimilés)</b></td><td>Puissants mais génériques&nbsp;: aucun module natif pour la conduite d'un élevage multi-filière (reproduction, consanguinité, couvoir, rationnement…), et pas de marketplace ni de logistique pour écouler les animaux.</td></tr>
+        <tr><td><b>Caisses gratuites (Loyverse…)</b></td><td>Bonnes pour encaisser, mais sans lien avec la production&nbsp;: aucun suivi de la ferme au comptoir, aucune commande aux fournisseurs ni accès aux acheteurs.</td></tr>
         <tr><td><b>Apps agritech internationales</b></td><td>En général calibrées sur un seul type d'élevage extensif (bovin), peu adaptées à la diversité et à l'échelle des exploitations périurbaines ouest-africaines.</td></tr>
       </tbody>
     </table></div>
-    <p>La différenciation de Seneya tient à une combinaison rare&nbsp;: la spécificité métier par filière, une marketplace de confiance alimentée par les données de l'ERP plutôt que par des déclarations invérifiables, et une seule application multi-rôle plutôt qu'un empilement d'outils disjoints.</p>
+    <p>La différenciation de Seneya tient à une combinaison rare&nbsp;: la spécificité métier par filière, une marketplace de confiance alimentée par les données de l'ERP plutôt que par des déclarations invérifiables, un réseau qui relie l'éleveur à ses fournisseurs (peu d'acteurs en Afrique de l'Ouest le font), et une seule application multi-rôle plutôt qu'un empilement d'outils disjoints.</p>
   </section>
 
   <!-- 11 -->
@@ -484,8 +508,11 @@
     <div class="twrap"><table>
       <thead><tr><th>Risque</th><th>Mitigation retenue</th></tr></thead>
       <tbody>
-        <tr><td><b>Construire sans le terrain</b><br>Beaucoup de fonctionnalités existent avant le premier utilisateur payant.</td><td>Geler les nouveaux modules le temps des fermes pilotes&nbsp;; ne développer que ce que leurs retours demandent.</td></tr>
+        <tr><td><b>Construire sans le terrain</b><br>Beaucoup de fonctionnalités existent avant le premier utilisateur.</td><td>Geler les nouveaux modules le temps des fermes pilotes&nbsp;; ne développer que ce que leurs retours demandent.</td></tr>
         <tr><td><b>Amorçage du Marché (cold start)</b><br>Une marketplace sans masse critique des deux côtés ne crée pas de valeur.</td><td>Pilote restreint à une filière et une zone en Phase&nbsp;2, plutôt qu'un lancement national.</td></tr>
+        <tr><td><b>Carte vide au lancement du Réseau</b><br>Si aucune provenderie n'y figure, l'éleveur ne revient pas.</td><td>Seneya crée elle-même des fiches fournisseurs à partir d'informations publiques (position, téléphone, WhatsApp)&nbsp;; le fournisseur qui s'inscrit récupère sa fiche. Argument terrain&nbsp;: «&nbsp;40 éleveurs de votre zone vous voient déjà sur Seneya&nbsp;».</td></tr>
+        <tr><td><b>Revenu tardif</b><br>L'application gratuite ne rapporte rien tant que les échanges ne passent pas par elle.</td><td>Activer tôt la commission sur le Réseau (aliment, poussins), le volume le plus régulier d'une ferme&nbsp;; garder des coûts d'exploitation bas.</td></tr>
+        <tr><td><b>Désintermédiation</b><br>Une fois en contact, éleveur et fournisseur peuvent traiter hors de l'app.</td><td>Faire valoir le suivi automatique (stock, finances), le paiement mobile money intégré et l'historique de fiabilité, plutôt que de cacher les contacts.</td></tr>
         <tr><td><b>Confiance / qualité</b><br>Un restaurant ne peut pas inspecter un animal à distance.</td><td>Les données de traçabilité de l'ERP sont le principal levier — d'où la priorité donnée à Seneya Ferme.</td></tr>
         <tr><td><b>Coût de la logistique</b><br>Le transport d'animaux vivants comporte des risques (mortalité, perte de poids) qui pèsent sur les marges.</td><td>Démarrer par un répertoire de transporteurs partenaires plutôt qu'une plateforme complète.</td></tr>
         <tr><td><b>Adoption / aisance numérique</b><br>Les exploitants n'ont pas tous la même aisance avec une application.</td><td>Interface volontairement simple (grille de modules, ruban unifié), saisie sur téléphone, accompagnement local.</td></tr>
@@ -501,7 +528,9 @@
     <p>Ces validations conditionnent les décisions des chapitres 7 et 8 — elles ne sont pas encore tranchées.</p>
     <ul>
       <li>Avec 3 à 5 fermes pilotes&nbsp;: quels modules sont réellement utilisés au quotidien, et lesquels bloquent&nbsp;?</li>
-      <li>Combien un exploitant est-il prêt à payer par mois, et selon quelle taille d'exploitation&nbsp;?</li>
+      <li>Les fermes pilotes qui ont une boutique ou un étal adoptent-elles la caisse au quotidien&nbsp;?</li>
+      <li>Une provenderie et un couvoir acceptent-ils de recevoir leurs commandes par Seneya, et quel taux de commission est acceptable pour eux&nbsp;?</li>
+      <li>Combien un éleveur est-il prêt à payer pour «&nbsp;vendre plus vite&nbsp;»&nbsp;?</li>
       <li>Interroger des restaurants&nbsp;: changeraient-ils de fournisseur habituel, à quel prix et à quelles conditions&nbsp;?</li>
       <li>Identifier la filière et la ville pilotes pour la Phase&nbsp;2 du Marché.</li>
       <li>Identifier 1 à 2 transporteurs partenaires pour la version minimale de la Logistique.</li>
@@ -517,16 +546,16 @@
       <div class="box-h">Avertissement</div>
       <p>Aucune de ces valeurs n'est validée par des données réelles — elles servent uniquement de cadre de discussion, en attendant les validations du chapitre&nbsp;12. Ne pas les citer comme des prévisions.</p>
     </div>
-    <p>À titre d'illustration, si l'abonnement se situait entre <b>5 000 et 15 000&nbsp;FCFA/mois</b> selon la taille de l'exploitation, voici l'ordre de grandeur du revenu mensuel récurrent (MRR) selon trois scénarios d'adoption au terme de la Phase&nbsp;1&nbsp;:</p>
+    <p>L'application étant gratuite, le revenu dépend du volume d'échanges qui passe par Seneya. À titre d'illustration, avec une <b>commission de 3&nbsp;%</b> sur les commandes du Réseau (aliment, poussins, matériel) et un achat moyen de <b>150&nbsp;000&nbsp;FCFA par ferme et par mois</b> passé par l'application&nbsp;:</p>
     <div class="twrap"><table>
-      <thead><tr><th>Scénario</th><th>Exploitants payants</th><th>Abonnement moyen</th><th>MRR illustratif</th></tr></thead>
+      <thead><tr><th>Scénario</th><th>Fermes actives</th><th>Volume mensuel du Réseau</th><th>Commission illustrative</th></tr></thead>
       <tbody>
-        <tr><td>Bas</td><td class="tnum">100</td><td class="tnum">8&nbsp;000&nbsp;FCFA</td><td class="tnum"><b>800&nbsp;000&nbsp;FCFA</b></td></tr>
-        <tr><td>Moyen</td><td class="tnum">500</td><td class="tnum">8&nbsp;000&nbsp;FCFA</td><td class="tnum"><b>4&nbsp;000&nbsp;000&nbsp;FCFA</b></td></tr>
-        <tr><td>Haut</td><td class="tnum">2&nbsp;000</td><td class="tnum">8&nbsp;000&nbsp;FCFA</td><td class="tnum"><b>16&nbsp;000&nbsp;000&nbsp;FCFA</b></td></tr>
+        <tr><td>Bas</td><td class="tnum">100</td><td class="tnum">15&nbsp;millions&nbsp;FCFA</td><td class="tnum"><b>450&nbsp;000&nbsp;FCFA</b></td></tr>
+        <tr><td>Moyen</td><td class="tnum">500</td><td class="tnum">75&nbsp;millions&nbsp;FCFA</td><td class="tnum"><b>2&nbsp;250&nbsp;000&nbsp;FCFA</b></td></tr>
+        <tr><td>Haut</td><td class="tnum">2&nbsp;000</td><td class="tnum">300&nbsp;millions&nbsp;FCFA</td><td class="tnum"><b>9&nbsp;000&nbsp;000&nbsp;FCFA</b></td></tr>
       </tbody>
     </table></div>
-    <p>Le Marché (Phase&nbsp;2) ajouterait une commission — pour repère, chaque point de commission sur un volume mensuel de 50&nbsp;millions&nbsp;FCFA de transactions représente 500&nbsp;000&nbsp;FCFA de revenu additionnel. Ce volume dépend entièrement du pilote restreint et ne peut pas être estimé sérieusement avant.</p>
+    <p>Le Marché (Phase&nbsp;2) et l'option «&nbsp;vendre plus vite&nbsp;» s'y ajouteraient — pour repère, chaque point de commission sur 50&nbsp;millions&nbsp;FCFA de ventes mensuelles aux restaurants et hôtels représente 500&nbsp;000&nbsp;FCFA de revenu additionnel. Ces volumes dépendent entièrement des pilotes et ne peuvent pas être estimés sérieusement avant.</p>
   </section>
 
   <!-- 14 -->
@@ -536,8 +565,8 @@
     <h2>L'équipe recherchée</h2>
     <p>Le socle technique est en place&nbsp;: le besoin le plus urgent est désormais sur le terrain. La rémunération ou la participation est à discuter selon le profil et le niveau d'implication (équité, revenu différé ou hybride)&nbsp;; aucune structure n'est imposée à ce stade.</p>
     <div class="roles">
-      <div class="role"><span class="tag">Priorité 1</span><div class="role-body"><h4>Responsable terrain / développement commercial</h4><p>Recruter et accompagner les fermes pilotes, recueillir leurs retours, tester les prix d'abonnement&nbsp;; puis préparer le pilote Marché (restaurants, transporteurs).</p></div></div>
-      <div class="role"><span class="tag">Priorité 1</span><div class="role-body"><h4>Développeur·se Django</h4><p>Mise en production et exploitation (serveur, sauvegardes, supervision), approfondissement des filières, API pour le Marché.</p></div></div>
+      <div class="role"><span class="tag">Priorité 1</span><div class="role-body"><h4>Responsable terrain / développement commercial</h4><p>Recruter et accompagner les fermes pilotes, recueillir leurs retours, inscrire les provenderies et couvoirs de leur zone sur le Réseau&nbsp;; puis préparer le pilote Marché (restaurants, hôtels, transporteurs).</p></div></div>
+      <div class="role"><span class="tag">Priorité 1</span><div class="role-body"><h4>Développeur·se Django</h4><p>Mise en production et exploitation (serveur, sauvegardes, supervision), approfondissement des filières, paiement mobile money, API pour le Marché.</p></div></div>
       <div class="role"><span class="tag">Priorité 2</span><div class="role-body"><h4>Développeur·se mobile / frontend</h4><p>Finalisation de l'application Capacitor (Android d'abord), expérience hors connexion, notifications.</p></div></div>
       <div class="role"><span class="tag">Priorité 2</span><div class="role-body"><h4>Designer produit / UI</h4><p>Cohérence de l'expérience sur toutes les filières, écrans pensés pour le téléphone et des utilisateurs à aisance numérique variable, déclinaison de l'identité Seneya (icônes, visuels, supports imprimés).</p></div></div>
       <div class="role"><span class="tag">Priorité 2</span><div class="role-body"><h4>Communication &amp; marketing</h4><p>Faire connaître Seneya auprès des éleveurs et des coopératives&nbsp;: réseaux sociaux, contenus pédagogiques (vidéos, témoignages des fermes pilotes), présence sur les salons et événements agricoles, campagnes d'acquisition.</p></div></div>
@@ -560,7 +589,11 @@
         <tr><td class="mono" style="white-space:nowrap"><b>IC / SGR</b></td><td>Indice de conversion alimentaire (kg d'aliment par kg de poisson produit) et taux de croissance spécifique.</td></tr>
         <tr><td class="mono" style="white-space:nowrap"><b>Pilote restreint</b></td><td>Lancement limité à une filière et une ville avant extension.</td></tr>
         <tr><td class="mono" style="white-space:nowrap"><b>Cold start</b></td><td>Difficulté à amorcer une marketplace tant que l'offre et la demande n'atteignent pas une masse critique.</td></tr>
-        <tr><td class="mono" style="white-space:nowrap"><b>MRR</b></td><td>Revenu mensuel récurrent, issu principalement des abonnements.</td></tr>
+        <tr><td class="mono" style="white-space:nowrap"><b>Réseau Seneya</b></td><td>La carte et les échanges entre comptes Seneya&nbsp;: commandes aux provenderies, réservations de poussins aux couvoirs.</td></tr>
+        <tr><td class="mono" style="white-space:nowrap"><b>Point de vente</b></td><td>Boutique, étal ou stand d'une ferme, avec son stock et sa caisse.</td></tr>
+        <tr><td class="mono" style="white-space:nowrap"><b>Provenderie</b></td><td>Fabricant ou vendeur d'aliment pour animaux.</td></tr>
+        <tr><td class="mono" style="white-space:nowrap"><b>Vendre plus vite</b></td><td>Option payante qui met en avant les sujets d'un éleveur auprès des acheteurs.</td></tr>
+        <tr><td class="mono" style="white-space:nowrap"><b>Désintermédiation</b></td><td>Quand deux parties mises en relation traitent ensuite sans passer par la plateforme.</td></tr>
       </tbody>
     </table></div>
   </section>
@@ -570,17 +603,19 @@
     <div class="chapter-head"><span class="chapter-n">16 / 16</span></div>
     <div class="kicker">État des lieux détaillé</div>
     <h2>Annexe — état du produit</h2>
-    <p>Trois projets composent aujourd'hui Seneya&nbsp;: l'application <b>Seneya Ferme</b> (Django), le <b>site de l'entreprise</b> (présentation des produits, demande de rappel) et la <b>coquille mobile</b> Capacitor.</p>
+    <p>Trois projets composent aujourd'hui Seneya&nbsp;: l'application <b>Seneya Ferme</b> (Django), le <b>site de l'entreprise</b> (présentation des produits dont la Pisciculture, les Finances, les points de vente et le Réseau, demande de rappel) et la <b>coquille mobile</b> Capacitor.</p>
     <div class="twrap"><table>
       <thead><tr><th>Élément</th><th>État</th></tr></thead>
       <tbody>
         <tr><td><b>Lapins</b></td><td>Complet&nbsp;: cheptel, reproduction avec logique métier, cages, santé, alimentation, vue d'ensemble, fiches imprimables.</td></tr>
         <tr><td><b>Volailles &amp; Couvoir</b></td><td>Complets&nbsp;: bandes, ponte, santé, vaccins, alimentation&nbsp;; incubation, mirage, éclosion avec transfert au stock.</td></tr>
-        <tr><td><b>Pisciculture</b></td><td>Bassins, lots, pesées, mortalités, transferts et tris, alimentation depuis le stock. À venir&nbsp;: qualité de l'eau et santé, pêches et vente, écloserie.</td></tr>
-        <tr><td><b>Finances</b></td><td>Comptes, opérations, virements, achats vers le stock, paiements et dettes. À venir&nbsp;: encaissement des ventes, rentabilité par filière.</td></tr>
+        <tr><td><b>Pisciculture</b></td><td>Complet&nbsp;: bassins, lots, pesées, mortalités, transferts et tris, alimentation depuis le stock, qualité de l'eau et santé, pêches en stock et vente au kilo, écloserie.</td></tr>
+        <tr><td><b>Finances</b></td><td>Complet&nbsp;: comptes, opérations, virements, achats vers le stock, paiements et dettes, encaissement des ventes, rentabilité par filière et alertes.</td></tr>
         <tr><td><b>Stocks, Ventes, Contacts, Activités, Tableau de bord</b></td><td>Disponibles et reliés entre eux&nbsp;; devis et factures en PDF.</td></tr>
+        <tr><td><b>Points de vente</b></td><td>Caisse façon Odoo&nbsp;: stock propre à chaque point de vente, vente et approvisionnement par conditionnement, ticket imprimé, clôture de caisse.</td></tr>
+        <tr><td><b>Réseau Seneya</b></td><td>Carte des fournisseurs (fiches créées par Seneya pour ceux qui ne sont pas encore inscrits), commandes entre fermes, réservations de poussins, notifications, paiements déclarés et confirmés, commission calculée. À venir&nbsp;: paiement mobile money intégré.</td></tr>
         <tr><td><b>Plateforme</b></td><td>Inscription d'une ferme en quelques étapes, une adresse par ferme, équipe et permissions par rôle, App Store des modules.</td></tr>
-        <tr><td><b>Mobile</b></td><td>Coquille Capacitor fonctionnelle sur Android, en test.</td></tr>
+        <tr><td><b>Mobile</b></td><td>Coquille Capacitor fonctionnelle sur Android, en test, avec la nouvelle icône Seneya.</td></tr>
         <tr><td><b>Mise en ligne</b></td><td>À faire&nbsp;: hébergement, nom de domaine seneya.com, sauvegardes.</td></tr>
       </tbody>
     </table></div>
